@@ -1,119 +1,120 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState } from 'react';
+import { useState, useCallback } from 'react';
 
-// Função para gerar nomes aleatórios
+// Funções para gerar dados aleatórios
 const useNomeAleatorio = () => {
-  const nomes = ["Ana", "Bruno", "Carlos", "Diana", "Eduardo", "Fernanda", "Gustavo", "Helena", "Igor", "Julia"];
-  const sobrenomes = ["Silva", "Santos", "Oliveira", "Pereira", "Almeida", "Costa", "Gomes", "Martins", "Souza", "Ferreira"];
-  const nome = nomes[Math.floor(Math.random() * nomes.length)];
-  const sobrenome = sobrenomes[Math.floor(Math.random() * sobrenomes.length)];
-  return `${nome} ${sobrenome}`;
+    const nomes = ['João', 'Maria', 'José', 'Ana', 'Paulo', 'Carla', 'Pedro', 'Lucia'];
+    return nomes[Math.floor(Math.random() * nomes.length)];
 };
 
-// Função para gerar CPFs aleatórios
 const useCpfAleatorio = () => {
-  const cpf = `${Math.floor(100000000 + Math.random() * 900000000)}-${Math.floor(10 + Math.random() * 90)}`;
-  const dataEmissao = new Date(2020, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28));
-  return { cpf, dataEmissao };
+    const cpf = Math.floor(10000000000 + Math.random() * 90000000000).toString();
+    return { cpf: cpf, dataEmissao: new Date() };
 };
 
-// Função para gerar Rgs aleatórios
 const useRgAleatorio = () => {
-  const rg = `${Math.floor(1000000 + Math.random() * 9000000)}-${Math.floor(10 + Math.random() * 90)}`;
-  const dataEmissao = new Date(2020, Math.floor(Math.random() * 12), Math.floor(Math.random() * 28));
-  return { rg, dataEmissao };
+    const rg = Math.floor(10000000 + Math.random() * 90000000).toString();
+    return { rg: rg, dataEmissao: new Date()};
 };
 
-// Função para gerar telefones aleatórios
 const useTelefoneAleatorio = () => {
-  const ddd = `${Math.floor(10 + Math.random() * 90)}`;
-  const numero = `${Math.floor(900000000 + Math.random() * 100000000)}`;
-  return { ddd, numero };
+    const telefone = Math.floor(100000000 + Math.random() * 900000000).toString();
+    return telefone;
 };
 
-// Função para gerar nomes de produtos/serviços aleatórios
-const useNomeProdutoServicoAleatorio = () => {
-  const produtosServicos = ["Banho", "Tosa", "Vacinação", "Ração", "Brinquedo", "Guia", "Coleira", "Shampoo", "Condicionador", "Petiscos"];
-  return produtosServicos[Math.floor(Math.random() * produtosServicos.length)];
-};
-
-// Função para gerar preços aleatórios
-const usePrecoAleatorio = () => {
-  return Math.floor(10 + Math.random() * 90);
-};
-
-// Função para gerar pets aleatórios
 const usePetAleatorio = () => {
-  const nomesPets = ["Rex", "Bella", "Charlie", "Luna", "Max", "Lucy", "Buddy", "Molly", "Rocky", "Daisy"];
-  const tipos = ["Cachorro", "Gato", "Pássaro", "Peixe", "Roedor"];
-  const racas = ["Vira-lata", "Siamês", "Pastor", "Labrador", "Poodle"];
-  const generos = ["Macho", "Fêmea"];
-  const nome = nomesPets[Math.floor(Math.random() * nomesPets.length)];
-  const tipo = tipos[Math.floor(Math.random() * tipos.length)];
-  const raca = racas[Math.floor(Math.random() * racas.length)];
-  const genero = generos[Math.floor(Math.random() * generos.length)];
-  return { nome, tipo, raca, genero };
+    const pets = ['Cachorro', 'Gato', 'Pássaro', 'Peixe'];
+    const racas = ['Beta', 'Labrador', 'Poodle', 'Persa'];
+    const generos = ['Masculino', 'Feminino'];
+    return {
+        nome: useNomeAleatorio(),
+        tipo: pets[Math.floor(Math.random() * pets.length)],
+        raca: racas[Math.floor(Math.random() * racas.length)],
+        genero: generos[Math.floor(Math.random() * generos.length)],
+    };
 };
 
-// Hook para popular a empresa
+const useNomeProdutoServicoAleatorio = () => {
+    const produtosServicos = ['Banho', 'Tosa', 'Vacina', 'Ração', 'Brinquedo'];
+    return produtosServicos[Math.floor(Math.random() * produtosServicos.length)];
+};
+
+const usePrecoAleatorio = () => {
+    return (Math.random() * 100).toFixed(2);
+};
+
 const usePopularEmpresa = (empresa) => {
-  const [clientes, setClientes] = useState([]);
-  const [produtos, setProdutos] = useState([]);
-  const [servicos, setServicos] = useState([]);
+    const [clientes, setClientes] = useState(() => {
+        const savedClientes = localStorage.getItem('clientes');
+        return savedClientes ? JSON.parse(savedClientes) : [];
+    });
 
-  const popularEmpresa = () => {
-    let novosClientes = [];
-    let novosProdutos = [];
-    let novosServicos = [];
+    const [produtos, setProdutos] = useState(() => {
+        const savedProdutos = localStorage.getItem('produtos');
+        return savedProdutos ? JSON.parse(savedProdutos) : [];
+    });
 
-    for (let i = 0; i < 20; i++) {
-      // Criar cliente
-      const nome = useNomeAleatorio();
-      const nomeSocial = useNomeAleatorio();
-      const cpf = useCpfAleatorio();
-      const rg = useRgAleatorio();
-      const telefone = useTelefoneAleatorio();
-      const pet = usePetAleatorio();
-      const cliente = { nome, nomeSocial, cpf, rg, telefone, pet, produtosConsumidos: [], servicosConsumidos: [] };
-      novosClientes.push(cliente);
+    const [servicos, setServicos] = useState(() => {
+        const savedServicos = localStorage.getItem('servicos');
+        return savedServicos ? JSON.parse(savedServicos) : [];
+    });
 
-      // Criar produto
-      const nomeProduto = useNomeProdutoServicoAleatorio();
-      const precoProduto = usePrecoAleatorio();
-      const produto = { nome: nomeProduto, preco: precoProduto };
-      novosProdutos.push(produto);
+    const popularEmpresa = useCallback(() => {
+        if (clientes.length > 0 && produtos.length > 0 && servicos.length > 0) {
+            return;
+        }
 
-      // Criar serviço
-      const nomeServico = useNomeProdutoServicoAleatorio();
-      const precoServico = usePrecoAleatorio();
-      const servico = { nome: nomeServico, preco: precoServico };
-      novosServicos.push(servico);
+        let novosClientes = [];
+        let novosProdutos = [];
+        let novosServicos = [];
 
-      // Associar produtos consumidos pelo cliente (quantidade aleatória entre 1 e 5)
-      const numProdutos = Math.floor(Math.random() * 5) + 1;
-      for (let j = 0; j < numProdutos; j++) {
-        const produtoConsumido = novosProdutos[Math.floor(Math.random() * novosProdutos.length)];
-        cliente.produtosConsumidos.push(produtoConsumido);
-      }
+        for (let i = 0; i < 20; i++) {
+            const nome = useNomeAleatorio();
+            const nomeSocial = useNomeAleatorio();
+            const cpf = useCpfAleatorio();
+            const rg = useRgAleatorio();
+            const telefone = useTelefoneAleatorio();
+            const pet = usePetAleatorio();
+            const cliente = { nome, nomeSocial, cpf, rg, telefone, pet, produtosConsumidos: [], servicosConsumidos: [] };
+            novosClientes.push(cliente);
 
-      // Associar serviços consumidos pelo cliente (quantidade aleatória entre 1 e 5)
-      const numServicos = Math.floor(Math.random() * 5) + 1;
-      for (let j = 0; j < numServicos; j++) {
-        const servicoConsumido = novosServicos[Math.floor(Math.random() * novosServicos.length)];
-        cliente.servicosConsumidos.push(servicoConsumido);
-      }
-    }
+            const nomeProduto = useNomeProdutoServicoAleatorio();
+            const precoProduto = usePrecoAleatorio();
+            const produto = { nome: nomeProduto, preco: precoProduto };
+            novosProdutos.push(produto);
 
-    setClientes(novosClientes);
-    setProdutos(novosProdutos);
-    setServicos(novosServicos);
+            const nomeServico = useNomeProdutoServicoAleatorio();
+            const precoServico = usePrecoAleatorio();
+            const servico = { nome: nomeServico, preco: precoServico };
+            novosServicos.push(servico);
 
-    empresa.clientes = novosClientes;
-    empresa.produtos = novosProdutos;
-    empresa.servicos = novosServicos;
-  };
+            const numProdutos = Math.floor(Math.random() * 5) + 1;
+            for (let j = 0; j < numProdutos; j++) {
+                const produtoConsumido = novosProdutos[Math.floor(Math.random() * novosProdutos.length)];
+                cliente.produtosConsumidos.push(produtoConsumido);
+            }
 
-  return { popularEmpresa, clientes, produtos, servicos };
+            const numServicos = Math.floor(Math.random() * 5) + 1;
+            for (let j = 0; j < numServicos; j++) {
+                const servicoConsumido = novosServicos[Math.floor(Math.random() * novosServicos.length)];
+                cliente.servicosConsumidos.push(servicoConsumido);
+            }
+        }
+
+        setClientes(novosClientes);
+        setProdutos(novosProdutos);
+        setServicos(novosServicos);
+
+        localStorage.setItem('clientes', JSON.stringify(novosClientes));
+        localStorage.setItem('produtos', JSON.stringify(novosProdutos));
+        localStorage.setItem('servicos', JSON.stringify(novosServicos));
+
+        empresa.clientes = novosClientes;
+        empresa.produtos = novosProdutos;
+        empresa.servicos = novosServicos;
+    }, [clientes.length, produtos.length, servicos.length, empresa]);
+
+    return { popularEmpresa, clientes, setClientes, produtos, servicos };
 };
 
-export { useNomeAleatorio, useCpfAleatorio, useRgAleatorio, useTelefoneAleatorio, useNomeProdutoServicoAleatorio, usePrecoAleatorio, usePetAleatorio, usePopularEmpresa };
+export { usePopularEmpresa };
