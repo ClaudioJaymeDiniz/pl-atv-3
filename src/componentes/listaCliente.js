@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { usePopularEmpresa } from './hooks';
 
-const EmpresaComponent = ({ empresa }) => {
+const ListagemClientes = ({ empresa }) => {
     const { popularEmpresa, clientes, setClientes } = usePopularEmpresa(empresa);
     const [showModal, setShowModal] = useState(false);
     const [clienteSelecionado, setClienteSelecionado] = useState(null);
@@ -188,4 +188,4 @@ const EmpresaComponent = ({ empresa }) => {
     );
 };
 
-export default EmpresaComponent;
+export default ListagemClientes;

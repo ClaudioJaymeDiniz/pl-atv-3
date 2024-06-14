@@ -1,11 +1,11 @@
 /* eslint-disable no-unused-vars */
 import { useState } from "react";
 import BarraNavegacao from "./barraNavegacao"
-import ListaCliente from "./listaCliente";
+import ListagemCliente from "./listaCliente";
 import FormularioCadastroCliente from "./formularioCadastroCliente";
-import EmpresaComponent from "./listaCliente";
 import ListaProdutos from "./listaProduto";
 import ListaServisos from "./listaServico";
+import Compras from "./compras";
 
 export default function Roteador() {
     const [tela, setTela] = useState('Clientes')
@@ -23,22 +23,34 @@ export default function Roteador() {
         if (tela === 'Clientes') {
             return (
                 <>
-                    <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={['Clientes', 'Cadastros','Produtos','Serviços']} />
-                    <EmpresaComponent tema="#e3f2fd" empresa={empresa} />
+                    <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={
+                        ['Clientes', 'Cadastros','Produtos','Serviços','Compras']} />
+                    <ListagemCliente tema="#e3f2fd" empresa={empresa} />
                 </>
             )
         } else if(tela === 'Produtos'){
             return (
                 <>
-                <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={['Clientes', 'Cadastros','Produtos', 'Serviços']} />
+                <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={
+                    ['Clientes', 'Cadastros','Produtos', 'Serviços','Compras']} />
                 <ListaProdutos tema="#e3f2fd" empresa={empresa} />
+                </>
+            )
+
+        }else if(tela === 'Compras'){
+            return (
+                <>
+                <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={
+                    ['Clientes', 'Cadastros','Produtos', 'Serviços','Compras']} />
+                <Compras tema="#e3f2fd" empresa={empresa} />
                 </>
             )
 
         }else if(tela === 'Serviços'){
             return (
                 <>
-                <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={['Clientes', 'Cadastros','Produtos','Serviços']} />
+                <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={
+                    ['Clientes', 'Cadastros','Produtos','Serviços','Compras']} />
                 <ListaServisos tema="#e3f2fd" empresa={empresa} />
                 </>
             )
@@ -46,7 +58,8 @@ export default function Roteador() {
         } else {
             return (
                 <>
-                    <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={['Clientes', 'Cadastros','Produtos']} />
+                    <BarraNavegacao seletorView={selecionarView} tema="#e3f2fd" botoes={
+                        ['Clientes', 'Cadastros','Produtos','Serviços','Compras']} />
                     <FormularioCadastroCliente tema="#e3f2fd" />
                 </>
             )
