@@ -60,10 +60,10 @@ const ListagemClientes = ({ empresa }) => {
             <div className='list-group'>
                 <h1>Clientes</h1>
                 {clientes.map((cliente, index) => (
-                    <a 
-                        href='#' 
+                    <a
+                        href='#'
                         className='list-group-item list-group-item-action list-group-item-primary'
-                        key={index} 
+                        key={index}
                         onClick={() => abrirModal(cliente)}
                     >
                         {cliente.nome}
@@ -121,60 +121,80 @@ const ListagemClientes = ({ empresa }) => {
                                 <button type="button" className="btn-close" onClick={fecharModalEditar}></button>
                             </div>
                             <div className="modal-body">
-                                <label>Nome:
-                                    <input type="text" name="nome" value={clienteEditando.nome} onChange={handleInputChange} />
-                                </label>
-                                <label>Nome Social:
-                                    <input type="text" name="nomeSocial" value={clienteEditando.nomeSocial} onChange={handleInputChange} />
-                                </label>
-                                <label>CPF:
-                                    <input type="text" name="cpf" value={clienteEditando.cpf.cpf} onChange={(e) => {
-                                        const newCpf = { ...clienteEditando.cpf, cpf: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, cpf: newCpf });
-                                    }} />
-                                </label>
-                                <label>Data Emissão:
-                                    <input type="date" name="dataEmissao" value={new Date(clienteEditando.cpf.dataEmissao).toISOString().substring(0, 10)} onChange={(e) => {
-                                        const newCpf = { ...clienteEditando.cpf, dataEmissao: new Date(e.target.value) };
-                                        setClienteEditando({ ...clienteEditando, cpf: newCpf });
-                                    }} />
-                                </label>
-                                <label>RG:
-                                    <input type="text" name="rg" value={clienteEditando.cpf.cpf} onChange={(e) => {
-                                        const newCpf = { ...clienteEditando.cpf, cpf: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, cpf: newCpf });
-                                    }} />
-                                </label>
-                                <label>Data Emissão:
-                                    <input type="date" name="dataEmissao" value={new Date(clienteEditando.cpf.dataEmissao).toISOString().substring(0, 10)} onChange={(e) => {
-                                        const newCpf = { ...clienteEditando.cpf, dataEmissao: new Date(e.target.value) };
-                                        setClienteEditando({ ...clienteEditando, cpf: newCpf });
-                                    }} />
-                                </label>
-                                <label>Nome Pet:
-                                    <input type="text" name="nomePet" value={clienteEditando.pet.nome} onChange={(e) => {
-                                        const newPet = { ...clienteEditando.pet, nome: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, pet: newPet });
-                                    }} />
-                                </label>
-                                <label>Tipo:
-                                    <input type="text" name="tipo" value={clienteEditando.pet.tipo} onChange={(e) => {
-                                        const newPet = { ...clienteEditando.pet, tipo: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, pet: newPet });
-                                    }} />
-                                </label>
-                                <label>Raça:
-                                    <input type="text" name="raca" value={clienteEditando.pet.raca} onChange={(e) => {
-                                        const newPet = { ...clienteEditando.pet, raca: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, pet: newPet });
-                                    }} />
-                                </label>
-                                <label>Gênero:
-                                    <input type="text" name="genero" value={clienteEditando.pet.genero} onChange={(e) => {
-                                        const newPet = { ...clienteEditando.pet, genero: e.target.value };
-                                        setClienteEditando({ ...clienteEditando, pet: newPet });
-                                    }} />
-                                </label>
+                                <div className="input-group mb-3">
+                                    <label>Nome:
+                                        <input type="text" name="nome" value={clienteEditando.nome} onChange={handleInputChange} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Nome Social:
+                                        <input type="text" name="nomeSocial" value={clienteEditando.nomeSocial} onChange={handleInputChange} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>CPF:
+                                        <input type="text" name="cpf" value={clienteEditando.cpf.cpf} onChange={(e) => {
+                                            const newCpf = { ...clienteEditando.cpf, cpf: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, cpf: newCpf });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Data Emissão:
+                                        <input type="date" name="dataEmissao" value={new Date(clienteEditando.cpf.dataEmissao).toISOString().substring(0, 10)} onChange={(e) => {
+                                            const newCpf = { ...clienteEditando.cpf, dataEmissao: new Date(e.target.value) };
+                                            setClienteEditando({ ...clienteEditando, cpf: newCpf });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>RG:
+                                        <input type="text" name="rg" value={clienteEditando.cpf.cpf} onChange={(e) => {
+                                            const newCpf = { ...clienteEditando.cpf, cpf: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, cpf: newCpf });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Data Emissão:
+                                        <input type="date" name="dataEmissao" value={new Date(clienteEditando.cpf.dataEmissao).toISOString().substring(0, 10)} onChange={(e) => {
+                                            const newCpf = { ...clienteEditando.cpf, dataEmissao: new Date(e.target.value) };
+                                            setClienteEditando({ ...clienteEditando, cpf: newCpf });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Nome Pet:
+                                        <input type="text" name="nomePet" value={clienteEditando.pet.nome} onChange={(e) => {
+                                            const newPet = { ...clienteEditando.pet, nome: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, pet: newPet });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Tipo:
+                                        <input type="text" name="tipo" value={clienteEditando.pet.tipo} onChange={(e) => {
+                                            const newPet = { ...clienteEditando.pet, tipo: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, pet: newPet });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Raça:
+                                        <input type="text" name="raca" value={clienteEditando.pet.raca} onChange={(e) => {
+                                            const newPet = { ...clienteEditando.pet, raca: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, pet: newPet });
+                                        }} />
+                                    </label>
+                                </div>
+                                <div className="input-group mb-3">
+                                    <label>Gênero:
+                                        <input type="text" name="genero" value={clienteEditando.pet.genero} onChange={(e) => {
+                                            const newPet = { ...clienteEditando.pet, genero: e.target.value };
+                                            setClienteEditando({ ...clienteEditando, pet: newPet });
+                                        }} />
+                                    </label>
+                                </div>
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-primary" onClick={salvarAlteracoes}>Salvar</button>
@@ -183,8 +203,9 @@ const ListagemClientes = ({ empresa }) => {
                         </div>
                     </div>
                 </div>
-            )}
-        </main>
+            )
+            }
+        </main >
     );
 };
 
